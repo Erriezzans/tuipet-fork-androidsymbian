@@ -296,20 +296,19 @@ public class Pet {
     }
 
     static String line(St s, long now) {
-        if (s.dead) return "RIP  [B] new egg";
+        if (s.dead) return "RIP B=new egg";
         if (s.mode == 1) return "> " + MENU[s.menu];
         if (s.mode == 2) return "> " + (s.sub == 0 ? "MEAT" : "PROTEIN");
         if (s.mode == 3) {
             if (s.page == 0) {
-                return "Hg " + hearts(s.hung) + " St " + hearts(s.str);
+                return "H" + hearts(s.hung) + " S" + hearts(s.str);
             }
-            return "Wt " + s.wt + "g Age " + age(s, now)
-                + "d Err " + s.err;
+            return "Wt" + s.wt + " " + age(s, now) + "d E" + s.err;
         }
         if (now - s.msgT < 30000 && !s.msg.isEmpty()) return s.msg;
-        if (s.stage == 0) return "Hatching soon...";
+        if (s.stage == 0) return "Hatching...";
         if (s.sleeping) return "Zzz...";
-        return "Hg " + hearts(s.hung) + " St " + hearts(s.str);
+        return "H" + hearts(s.hung) + " S" + hearts(s.str);
     }
 
     static String detail(St s, long now) {

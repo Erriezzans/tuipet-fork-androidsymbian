@@ -1,50 +1,49 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
-  <FrameLayout android:layout_width="180dp" android:layout_height="180dp"
-      android:layout_gravity="center" android:background="@drawable/digivice_body">
-    <TextView android:id="@+id/b_feed" android:layout_width="40dp"
-        android:layout_height="40dp" android:layout_marginStart="5dp"
-        android:layout_marginTop="84dp" android:gravity="center"
-        android:text="A" android:textColor="#FFFFFF" android:textStyle="bold"
-        android:background="@drawable/btn_bg"/>
-    <ViewFlipper android:id="@+id/lcd" android:layout_width="66dp"
-        android:layout_height="66dp" android:layout_marginStart="57dp"
-        android:layout_marginTop="61dp" android:background="@drawable/lcd_bg"
-        android:padding="4dp" android:autoStart="true" android:flipInterval="600">
+  <FrameLayout android:layout_width="196dp" android:layout_height="178dp"
+      android:layout_gravity="center">
+    <ImageView android:layout_width="196dp" android:layout_height="178dp"
+        android:scaleType="fitXY" android:src="@drawable/digivice_frame"/>
+    <ImageView android:id="@+id/lcd" android:layout_width="58dp"
+        android:layout_height="58dp" android:layout_marginStart="69dp"
+        android:layout_marginTop="64dp" android:background="@drawable/lcd_bg"/>
+    <ViewFlipper android:layout_width="36dp" android:layout_height="36dp"
+        android:layout_marginStart="80dp" android:layout_marginTop="76dp"
+        android:autoStart="true" android:flipInterval="600">
       <ImageView android:id="@+id/f1" android:layout_width="match_parent"
           android:layout_height="match_parent" android:src="@drawable/egg_a"/>
       <ImageView android:id="@+id/f2" android:layout_width="match_parent"
           android:layout_height="match_parent" android:src="@drawable/egg_b"/>
     </ViewFlipper>
-    <ImageView android:id="@+id/o_zzz" android:layout_width="14dp"
-        android:layout_height="14dp" android:layout_marginStart="60dp"
-        android:layout_marginTop="64dp" android:visibility="gone"
+    <ImageView android:id="@+id/o_zzz" android:layout_width="11dp"
+        android:layout_height="11dp" android:layout_marginStart="71dp"
+        android:layout_marginTop="66dp" android:visibility="gone"
         android:src="@drawable/ov_zzz"/>
-    <ImageView android:id="@+id/o_call" android:layout_width="14dp"
-        android:layout_height="14dp" android:layout_marginStart="83dp"
-        android:layout_marginTop="64dp" android:visibility="gone"
+    <ImageView android:id="@+id/o_call" android:layout_width="11dp"
+        android:layout_height="11dp" android:layout_marginStart="93dp"
+        android:layout_marginTop="66dp" android:visibility="gone"
         android:src="@drawable/ov_call"/>
-    <ImageView android:id="@+id/o_skull" android:layout_width="14dp"
-        android:layout_height="14dp" android:layout_marginStart="106dp"
-        android:layout_marginTop="64dp" android:visibility="gone"
+    <ImageView android:id="@+id/o_skull" android:layout_width="11dp"
+        android:layout_height="11dp" android:layout_marginStart="114dp"
+        android:layout_marginTop="66dp" android:visibility="gone"
         android:src="@drawable/ov_skull"/>
-    <ImageView android:id="@+id/o_poop" android:layout_width="14dp"
-        android:layout_height="14dp" android:layout_marginStart="106dp"
-        android:layout_marginTop="108dp" android:visibility="gone"
+    <ImageView android:id="@+id/o_poop" android:layout_width="11dp"
+        android:layout_height="11dp" android:layout_marginStart="114dp"
+        android:layout_marginTop="99dp" android:visibility="gone"
         android:src="@drawable/ov_poop"/>
+    <TextView android:id="@+id/stats" android:layout_width="58dp"
+        android:layout_height="10dp" android:layout_marginStart="69dp"
+        android:layout_marginTop="112dp" android:gravity="center"
+        android:maxLines="1" android:textSize="7sp"
+        android:textColor="#101818"/>
+    <TextView android:id="@+id/b_feed" android:layout_width="34dp"
+        android:layout_height="34dp" android:layout_marginStart="10dp"
+        android:layout_marginTop="75dp"/>
     <TextView android:id="@+id/b_play" android:layout_width="34dp"
-        android:layout_height="34dp" android:layout_marginStart="140dp"
-        android:layout_marginTop="62dp" android:gravity="center"
-        android:text="B" android:textColor="#FFFFFF" android:textStyle="bold"
-        android:background="@drawable/btn_bg"/>
+        android:layout_height="26dp" android:layout_marginStart="151dp"
+        android:layout_marginTop="56dp"/>
     <TextView android:id="@+id/b_heal" android:layout_width="34dp"
-        android:layout_height="34dp" android:layout_marginStart="140dp"
-        android:layout_marginTop="105dp" android:gravity="center"
-        android:text="C" android:textColor="#FFFFFF" android:textStyle="bold"
-        android:background="@drawable/btn_bg"/>
-    <TextView android:id="@+id/stats" android:layout_width="match_parent"
-        android:layout_height="14dp" android:layout_marginTop="153dp"
-        android:gravity="center" android:textSize="9sp"
-        android:textColor="#1B2A44"/>
+        android:layout_height="26dp" android:layout_marginStart="153dp"
+        android:layout_marginTop="101dp"/>
   </FrameLayout>
 </FrameLayout>
