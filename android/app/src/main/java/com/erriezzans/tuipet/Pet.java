@@ -12,12 +12,17 @@ public class Pet {
     static final int SPEED = 1;
     static final int[] NEED = {1, 10, 360, 1440, 2160};
     static final int MAX_STAGE = 4;
-    static final String[] MENU = {"STATS", "FOOD", "CLEAN", "SLEEP", "HEAL"};
+    static final String[] MENU =
+        {"STATS", "FOOD", "PLAY", "CLEAN", "SLEEP", "HEAL"};
+    static final String[] SPECIES =
+        {"Egg", "Botamon", "Koromon", "Agumon", "Greymon"};
+    static final String[] STAGE =
+        {"Egg", "Baby I", "Baby II", "Rookie", "Champion"};
     static final long MIN = 60000L;
 
     static class St {
         int stage, sm, poop, err, inj, heals, mode, menu, sub, page;
-        int hung = 4, str = 4, wt = 5;
+        int hung = 4, str = 4, joy = 4, wt = 5;
         boolean sleeping, tired, injured, dead;
         long lt, born, callUntil, sleepUntil, injSince, emptySince, msgT;
         String msg = "";
@@ -34,6 +39,7 @@ public class Pet {
         s.sm = p.getInt("sm", 0);
         s.hung = p.getInt("hung", 4);
         s.str = p.getInt("str", 4);
+        s.joy = p.getInt("joy", 4);
         s.wt = p.getInt("wt", 5);
         s.poop = p.getInt("poop", 0);
         s.err = p.getInt("err", 0);
@@ -62,11 +68,11 @@ public class Pet {
         sp(c).edit()
             .putInt("stage", s.stage).putInt("sm", s.sm)
             .putInt("hung", s.hung).putInt("str", s.str)
-            .putInt("wt", s.wt).putInt("poop", s.poop)
-            .putInt("err", s.err).putInt("inj", s.inj)
-            .putInt("heals", s.heals).putInt("mode", s.mode)
-            .putInt("menu", s.menu).putInt("sub", s.sub)
-            .putInt("page", s.page)
+            .putInt("joy", s.joy).putInt("wt", s.wt)
+            .putInt("poop", s.poop).putInt("err", s.err)
+            .putInt("inj", s.inj).putInt("heals", s.heals)
+            .putInt("mode", s.mode).putInt("menu", s.menu)
+            .putInt("sub", s.sub).putInt("page", s.page)
             .putBoolean("sleeping", s.sleeping)
             .putBoolean("tired", s.tired)
             .putBoolean("injured", s.injured)
@@ -151,6 +157,7 @@ public class Pet {
                 s.str--;
                 if (s.str == 0) s.callUntil = t + 10 * MIN;
             }
+            if (m % 50 == 0 && s.joy > 0) s.joy--;
             if (m % 120 == 0 && s.poop < 4) {
                 s.poop++;
                 if (s.poop == 4) injure(s, t);
@@ -176,8 +183,8 @@ public class Pet {
     }
 
     static void newEgg(St s, long now) {
-        s.stage = 0; s.sm = 0; s.hung = 4; s.str = 4; s.wt = 5;
-        s.poop = 0; s.err = 0; s.inj = 0; s.heals = 0;
+        s.stage = 0; s.sm = 0; s.hung = 4; s.str = 4; s.joy = 4;
+        s.wt = 5; s.poop = 0; s.err = 0; s.inj = 0; s.heals = 0;
         s.mode = 0; s.menu = 0; s.sub = 0; s.page = 0;
         s.sleeping = false; s.tired = false;
         s.injured = false; s.dead = false;
@@ -218,6 +225,9 @@ public class Pet {
             if (b.equals("A")) s.sub = (s.sub + 1) % 2;
             else if (b.equals("C")) s.mode = 1;
             else feed(s, now);
+        } else if (s.mode == 4) {
+            if (b.equals("C")) s.mode = 1;
+            else playRound(s, b.equals("B"), now);
         } else {
             if (b.equals("C")) s.mode = 0;
             else s.page = (s.page + 1) % 2;
@@ -229,10 +239,14 @@ public class Pet {
             case 0: s.mode = 3; s.page = 0; return;
             case 1: s.mode = 2; s.sub = 0; return;
             case 2:
+                if (s.sleeping) { say(s, "Shh, asleep", now); break; }
+                s.mode = 4;
+                return;
+            case 3:
                 say(s, s.poop > 0 ? "Clean!" : "Nothing", now);
                 s.poop = 0;
                 break;
-            case 3:
+            case 4:
                 if (s.sleeping) {
                     s.sleeping = false;
                     s.sleepUntil = 0;
@@ -260,6 +274,15 @@ public class Pet {
                     say(s, "Dose 1/2", now);
                 }
         }
+        s.mode = 0;
+    }
+
+    static void playRound(St s, boolean right, long now) {
+        boolean petRight = Math.random() < 0.5;
+        boolean win = right == petRight;
+        s.joy = Math.min(4, s.joy + (win ? 2 : 1));
+        s.wt = Math.max(1, s.wt - 1);
+        say(s, win ? "Won! :)" : "Lost :(", now);
         s.mode = 0;
     }
 
@@ -295,6 +318,48 @@ public class Pet {
         return (now - s.born) / 86400000L;
     }
 
+    static String mood(St s) {
+        if (s.dead) return "Gone";
+        if (s.sleeping) return "Asleep";
+        if (s.injured) return "Sick";
+        if (s.tired) return "Sleepy";
+        if (s.hung == 0) return "Starving";
+        if (s.hung <= 1) return "Hungry";
+        if (s.poop >= 3) return "Upset";
+        if (s.joy <= 1) return "Sad";
+        if (s.str == 0) return "Weak";
+        if (s.hung >= 3 && s.joy >= 3 && s.str >= 2) return "Happy";
+        return "Okay";
+    }
+
+    // 0 none, 1 heart, 2 tear, 3 meat, 4 anger
+    static int emote(St s) {
+        if (s.dead || s.stage == 0) return 0;
+        if (s.sleeping || s.injured || s.tired) return 0;
+        String m = mood(s);
+        if (m.equals("Happy")) return 1;
+        if (m.equals("Sad") || m.equals("Weak")) return 2;
+        if (m.equals("Hungry") || m.equals("Starving")) return 3;
+        if (m.equals("Upset")) return 4;
+        return 0;
+    }
+
+    static void add(StringBuilder b, String t) {
+        if (b.length() > 0) b.append(", ");
+        b.append(t);
+    }
+
+    static String needs(St s) {
+        StringBuilder b = new StringBuilder();
+        if (s.hung <= 1) add(b, "Meat");
+        if (s.str <= 1) add(b, "Protein");
+        if (s.joy <= 1) add(b, "Play");
+        if (s.poop > 0) add(b, "Clean");
+        if (s.injured) add(b, "Heal");
+        if (s.tired && !s.sleeping) add(b, "Sleep");
+        return b.toString();
+    }
+
     static String line(St s, long now) {
         if (s.dead) return "RIP B=new egg";
         if (s.mode == 1) return "> " + MENU[s.menu];
@@ -303,17 +368,41 @@ public class Pet {
             if (s.page == 0) {
                 return "H" + hearts(s.hung) + " S" + hearts(s.str);
             }
-            return "Wt" + s.wt + " " + age(s, now) + "d E" + s.err;
+            return "J" + hearts(s.joy) + " " + s.wt + "g";
         }
+        if (s.mode == 4) return "Pick < or >";
         if (now - s.msgT < 30000 && !s.msg.isEmpty()) return s.msg;
         if (s.stage == 0) return "Hatching...";
         if (s.sleeping) return "Zzz...";
-        return "H" + hearts(s.hung) + " S" + hearts(s.str);
+        return mood(s);
+    }
+
+    static String panel(St s, long now) {
+        if (s.dead) {
+            return "Your pet passed away\nPress B for a new egg\n ";
+        }
+        if (s.stage == 0) {
+            return "Digi-Egg\nIt will hatch soon...\nPress any button to shake it";
+        }
+        String l1 = "Hunger " + hearts(s.hung) + "  Str " + hearts(s.str)
+            + "  Joy " + hearts(s.joy);
+        String l2 = SPECIES[s.stage] + " (" + STAGE[s.stage] + ")  "
+            + s.wt + "g  Day " + (age(s, now) + 1)
+            + "  Mistakes " + s.err;
+        String l3;
+        if (s.mode != 0) {
+            l3 = "A: next    B: select    C: back";
+        } else {
+            String n = needs(s);
+            l3 = "Mood: " + mood(s) + (n.isEmpty() ? "" : "   Needs: " + n);
+        }
+        return l1 + "\n" + l2 + "\n" + l3;
     }
 
     static String detail(St s, long now) {
         return "Stage " + s.stage + "  Weight " + s.wt + "g\n"
-            + "Hunger " + s.hung + "/4  Strength " + s.str + "/4\n"
+            + "Hunger " + s.hung + "/4  Strength " + s.str
+            + "/4  Joy " + s.joy + "/4\n"
             + "Poop " + s.poop + "  Injuries " + s.inj
             + "  Mistakes " + s.err;
     }

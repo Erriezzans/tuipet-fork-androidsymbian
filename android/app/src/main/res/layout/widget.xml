@@ -1,49 +1,21 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-  <FrameLayout android:layout_width="196dp" android:layout_height="178dp"
-      android:layout_gravity="center">
-    <ImageView android:layout_width="196dp" android:layout_height="178dp"
-        android:scaleType="fitXY" android:src="@drawable/digivice_frame"/>
-    <ImageView android:id="@+id/lcd" android:layout_width="58dp"
-        android:layout_height="58dp" android:layout_marginStart="69dp"
-        android:layout_marginTop="64dp" android:background="@drawable/lcd_bg"/>
-    <ViewFlipper android:layout_width="36dp" android:layout_height="36dp"
-        android:layout_marginStart="80dp" android:layout_marginTop="76dp"
-        android:autoStart="true" android:flipInterval="600">
-      <ImageView android:id="@+id/f1" android:layout_width="match_parent"
-          android:layout_height="match_parent" android:src="@drawable/egg_a"/>
-      <ImageView android:id="@+id/f2" android:layout_width="match_parent"
-          android:layout_height="match_parent" android:src="@drawable/egg_b"/>
-    </ViewFlipper>
-    <ImageView android:id="@+id/o_zzz" android:layout_width="11dp"
-        android:layout_height="11dp" android:layout_marginStart="71dp"
-        android:layout_marginTop="66dp" android:visibility="gone"
-        android:src="@drawable/ov_zzz"/>
-    <ImageView android:id="@+id/o_call" android:layout_width="11dp"
-        android:layout_height="11dp" android:layout_marginStart="93dp"
-        android:layout_marginTop="66dp" android:visibility="gone"
-        android:src="@drawable/ov_call"/>
-    <ImageView android:id="@+id/o_skull" android:layout_width="11dp"
-        android:layout_height="11dp" android:layout_marginStart="114dp"
-        android:layout_marginTop="66dp" android:visibility="gone"
-        android:src="@drawable/ov_skull"/>
-    <ImageView android:id="@+id/o_poop" android:layout_width="11dp"
-        android:layout_height="11dp" android:layout_marginStart="114dp"
-        android:layout_marginTop="99dp" android:visibility="gone"
-        android:src="@drawable/ov_poop"/>
-    <TextView android:id="@+id/stats" android:layout_width="58dp"
-        android:layout_height="10dp" android:layout_marginStart="69dp"
-        android:layout_marginTop="112dp" android:gravity="center"
-        android:maxLines="1" android:textSize="7sp"
-        android:textColor="#101818"/>
-    <TextView android:id="@+id/b_feed" android:layout_width="34dp"
-        android:layout_height="34dp" android:layout_marginStart="10dp"
-        android:layout_marginTop="75dp"/>
-    <TextView android:id="@+id/b_play" android:layout_width="34dp"
-        android:layout_height="26dp" android:layout_marginStart="151dp"
-        android:layout_marginTop="56dp"/>
-    <TextView android:id="@+id/b_heal" android:layout_width="34dp"
-        android:layout_height="26dp" android:layout_marginStart="153dp"
-        android:layout_marginTop="101dp"/>
-  </FrameLayout>
+ android:layout_width="match_parent" android:layout_height="match_parent">
+<FrameLayout android:layout_width="274dp" android:layout_height="313dp" android:layout_gravity="center">
+<ImageView android:layout_width="274dp" android:layout_height="249dp" android:scaleType="fitXY" android:src="@drawable/digivice_frame"/>
+<ImageView android:id="@+id/lcd" android:layout_width="81dp" android:layout_height="81dp" android:layout_marginStart="97dp" android:layout_marginTop="90dp" android:background="@drawable/lcd_bg"/>
+<ViewFlipper android:layout_width="50dp" android:layout_height="50dp" android:layout_marginStart="112dp" android:layout_marginTop="106dp" android:autoStart="true" android:flipInterval="600">
+<ImageView android:id="@+id/f1" android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/egg_a"/>
+<ImageView android:id="@+id/f2" android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/egg_b"/>
+</ViewFlipper>
+<ImageView android:id="@+id/o_zzz" android:layout_width="15dp" android:layout_height="15dp" android:layout_marginStart="99dp" android:layout_marginTop="92dp" android:src="@drawable/ov_zzz" android:visibility="gone"/>
+<ImageView android:id="@+id/o_call" android:layout_width="15dp" android:layout_height="15dp" android:layout_marginStart="130dp" android:layout_marginTop="92dp" android:src="@drawable/ov_call" android:visibility="gone"/>
+<ImageView android:id="@+id/o_skull" android:layout_width="15dp" android:layout_height="15dp" android:layout_marginStart="160dp" android:layout_marginTop="92dp" android:src="@drawable/ov_skull" android:visibility="gone"/>
+<ImageView android:id="@+id/o_poop" android:layout_width="15dp" android:layout_height="15dp" android:layout_marginStart="160dp" android:layout_marginTop="139dp" android:src="@drawable/ov_poop" android:visibility="gone"/>
+<ImageView android:id="@+id/o_emo" android:layout_width="15dp" android:layout_height="15dp" android:layout_marginStart="98dp" android:layout_marginTop="120dp" android:src="@drawable/ov_heart" android:visibility="gone"/>
+<TextView android:id="@+id/stats" android:layout_width="90dp" android:layout_height="15dp" android:layout_marginStart="92dp" android:layout_marginTop="155dp" android:gravity="center" android:maxLines="1" android:textSize="9sp" android:textStyle="bold" android:textColor="#101818"/>
+<TextView android:id="@+id/b_feed" android:layout_width="59dp" android:layout_height="59dp" android:layout_marginStart="8dp" android:layout_marginTop="99dp"/>
+<TextView android:id="@+id/b_play" android:layout_width="59dp" android:layout_height="48dp" android:layout_marginStart="206dp" android:layout_marginTop="73dp"/>
+<TextView android:id="@+id/b_heal" android:layout_width="59dp" android:layout_height="48dp" android:layout_marginStart="209dp" android:layout_marginTop="136dp"/>
+<TextView android:id="@+id/panel" android:layout_width="274dp" android:layout_height="60dp" android:layout_marginTop="253dp" android:background="@drawable/panel_bg" android:padding="7dp" android:maxLines="3" android:ellipsize="end" android:textSize="11sp" android:textColor="#FFFFFF"/>
+</FrameLayout>
 </FrameLayout>

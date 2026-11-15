@@ -63,7 +63,10 @@ public class DigiviceWidget extends AppWidgetProvider {
         int[] sb = {R.drawable.egg_b, R.drawable.st1_b,
             R.drawable.st2_b, R.drawable.st3_b, R.drawable.st4_b};
         int[] mi = {R.drawable.ic_status, R.drawable.ic_feed,
-            R.drawable.ic_clean, R.drawable.ic_sleep, R.drawable.ic_heal};
+            R.drawable.ic_play, R.drawable.ic_clean,
+            R.drawable.ic_sleep, R.drawable.ic_heal};
+        int[] em = {R.drawable.ov_heart, R.drawable.ov_tear,
+            R.drawable.ov_meat, R.drawable.ov_angry};
         int a, b;
         boolean idle = false;
         if (s.dead) {
@@ -78,6 +81,9 @@ public class DigiviceWidget extends AppWidgetProvider {
         } else if (s.mode == 3) {
             a = R.drawable.ic_status;
             b = a;
+        } else if (s.mode == 4) {
+            a = R.drawable.ic_play;
+            b = a;
         } else {
             a = sa[s.stage];
             b = sb[s.stage];
@@ -86,6 +92,9 @@ public class DigiviceWidget extends AppWidgetProvider {
         v.setImageViewResource(R.id.f1, a);
         v.setImageViewResource(R.id.f2, b);
         boolean show = idle && s.stage > 0;
+        int e = Pet.emote(s);
+        v.setViewVisibility(R.id.o_emo, vis(show && e > 0));
+        if (e > 0) v.setImageViewResource(R.id.o_emo, em[e - 1]);
         v.setViewVisibility(R.id.o_poop, vis(show && s.poop > 0));
         v.setViewVisibility(R.id.o_skull, vis(show && s.injured));
         v.setViewVisibility(R.id.o_zzz,
@@ -94,6 +103,7 @@ public class DigiviceWidget extends AppWidgetProvider {
         v.setInt(R.id.lcd, "setBackgroundResource",
             s.sleeping ? R.drawable.lcd_dark : R.drawable.lcd_bg);
         v.setTextViewText(R.id.stats, Pet.line(s, now));
+        v.setTextViewText(R.id.panel, Pet.panel(s, now));
         v.setOnClickPendingIntent(R.id.b_feed, btn(c, "A", 1));
         v.setOnClickPendingIntent(R.id.b_play, btn(c, "B", 2));
         v.setOnClickPendingIntent(R.id.b_heal, btn(c, "C", 3));
