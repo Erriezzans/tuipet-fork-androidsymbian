@@ -10,8 +10,8 @@
         android:layout_marginStart="57dp" android:layout_marginTop="61dp"
         android:background="@drawable/lcd_bg" android:padding="4dp"
         android:autoStart="true" android:flipInterval="600">
-      <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/sprite_a"/>
-      <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/sprite_b"/>
+      <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/baby_a" android:id="@+id/f1"/>
+      <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/baby_b" android:id="@+id/f2"/>
     </ViewFlipper>
     <TextView android:id="@+id/b_play" android:layout_width="34dp" android:layout_height="34dp"
         android:layout_marginStart="140dp" android:layout_marginTop="62dp"
